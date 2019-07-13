@@ -18,7 +18,7 @@
  * glmark2.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Authors:
- *  Simon Que 
+ *  Simon Que
  *  Jesse Barker
  *  Alexandros Frantzis
  */
@@ -491,7 +491,7 @@ NativeStateDRM::init()
     // Find a connected connector
     for (int c = 0; c < resources_->count_connectors; c++) {
         connector_ = drmModeGetConnector(fd, resources_->connectors[c]);
-        if (DRM_MODE_CONNECTED == connector_->connection) {
+        if (DRM_MODE_CONNECTED == connector_->connection && connector_->mmWidth * connector_->mmHeight > 0) {
             break;
         }
         drmModeFreeConnector(connector_);

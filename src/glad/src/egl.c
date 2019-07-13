@@ -202,16 +202,16 @@ static int glad_egl_find_core_egl(EGLDisplay display) {
         display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
     }
 #endif
-    if (display == EGL_NO_DISPLAY) {
-        return 0;
-    }
+    // if (display == EGL_NO_DISPLAY) {
+    //     return 0;
+    // }
 
     version = eglQueryString(display, EGL_VERSION);
     (void) eglGetError();
 
     if (version == NULL) {
         major = 1;
-        minor = 0;
+        minor = 4;
     } else {
         GLAD_IMPL_UTIL_SSCANF(version, "%d.%d", &major, &minor);
     }
@@ -241,6 +241,8 @@ int gladLoadEGLUserPtr(EGLDisplay display, GLADuserptrloadfunc load, void* userp
     glad_egl_load_EGL_VERSION_1_2(load, userptr);
     glad_egl_load_EGL_VERSION_1_4(load, userptr);
     glad_egl_load_EGL_VERSION_1_5(load, userptr);
+
+    version = glad_egl_find_core_egl(display);
 
     if (!glad_egl_find_extensions_egl(display)) return 0;
     glad_egl_load_EGL_EXT_platform_base(load, userptr);

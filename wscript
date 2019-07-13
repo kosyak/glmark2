@@ -203,10 +203,13 @@ def configure_linux(ctx):
         ctx.check_cxx(lib = ['brcmEGL', 'brcmGLESv2'], uselib_store = 'egl', libpath='/opt/vc/lib')
         ctx.check_cxx(lib = ['bcm_host', 'vcos', 'vchiq_arm'], uselib_store = 'dispmanx', libpath='/opt/vc/lib')
 
+    if list_contains(ctx.options.flavors, 'drm'):
+        ctx.check_cxx(lib = ['gbm'], uselib_store = 'gbm', libpath='/usr/local/lib/aarch64-linux-gnu/mali')
+
     # Check optional packages
     opt_pkgs = [('x11', 'x11', None, list_contains(ctx.options.flavors, 'x11')),
                 ('libdrm','drm', None, list_contains(ctx.options.flavors, 'drm')),
-                ('gbm','gbm', None, list_contains(ctx.options.flavors, 'drm')),
+                # ('gbm','gbm', None, list_contains(ctx.options.flavors, 'drm')),
                 ('libudev', 'udev', None, list_contains(ctx.options.flavors, 'drm')),
                 ('mirclient','mirclient', '0.13', list_contains(ctx.options.flavors, 'mir')),
                 ('wayland-client','wayland-client', None, list_contains(ctx.options.flavors, 'wayland')),
